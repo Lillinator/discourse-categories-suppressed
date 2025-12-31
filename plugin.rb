@@ -2,8 +2,7 @@
 
 # name: discourse-categories-suppressed
 # about: Suppress categories from latest topics page.
-# version: 0.1
-# url: https://github.com/vinothkannans/discourse-categories-suppressed
+# version: 2.0
 
 after_initialize do
   if TopicQuery.respond_to?(:results_filter_callbacks)
@@ -12,7 +11,7 @@ after_initialize do
         category_ids =
           (SiteSetting.categories_suppressed_from_latest.presence || "").split("|").map(&:to_i)
 
-        if category_ids.blank? || list_type != :latest || options[:category] || options[:tags]
+        if category_ids.blank? || !%i[latest new].include?(list_type) || options[:category] || options[:tags]
           result
         else
           result.where("topics.category_id NOT IN (#{category_ids.join(",")})")
