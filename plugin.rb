@@ -2,8 +2,7 @@
 
 # name: discourse-categories-suppressed
 # about: Suppress categories from latest topics page.
-# version: 0.1
-# url: https://github.com/vinothkannans/discourse-categories-suppressed
+# version: 2.0
 
 after_initialize do
   if TopicQuery.respond_to?(:results_filter_callbacks)
