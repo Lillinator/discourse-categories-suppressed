@@ -12,7 +12,7 @@ after_initialize do
         category_ids =
           (SiteSetting.categories_suppressed_from_latest.presence || "").split("|").map(&:to_i)
 
-        if category_ids.blank? || list_type != :latest || options[:category] || options[:tags]
+        if category_ids.blank? || !%i[latest new].include?(list_type) || options[:category] || options[:tags]
           result
         else
           result.where("topics.category_id NOT IN (#{category_ids.join(",")})")
